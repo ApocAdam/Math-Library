@@ -1,3 +1,6 @@
+// Seeting up dotenv
+require("dotenv").config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,6 +11,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// Setting up Mongoose Connection
+const mongoose = require("mongoose");
+const mongoDB = process.env.DB_URL;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
