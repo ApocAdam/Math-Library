@@ -12,9 +12,10 @@ if (!userArgs[0].startsWith('mongodb')) {
 */
 var async = require('async')
 var Book = require('./models/book')
+var Author = require("./models/author")
 var Field = require('./models/field')
 var Difficulty = require('./models/difficulty')
-var Publisher = require('./models/Publisher')
+var Publisher = require('./models/publisher')
 
 
 var mongoose = require('mongoose');
@@ -46,8 +47,8 @@ function authorCreate(first_name, last_name, cb) {
   }  );
 }
 
-function fieldCreate(name, cb) {
-  var field = new Field({ name: name });
+function fieldCreate(field, cb) {
+  var field = new Field({ field: field });
        
   field.save(function (err) {
     if (err) {
@@ -60,43 +61,44 @@ function fieldCreate(name, cb) {
   }   );
 }
 
-function difficultyCreate(name, cb) {
-    var difficulty = new Difficulty({ name: name });
+function difficultyCreate(difficulty, cb) {
+    var difficulty = new Difficulty({ difficulty: difficulty });
          
-    field.save(function (err) {
+    difficulty.save(function (err) {
       if (err) {
         cb(err, null);
         return;
       }
       console.log('New Difficulty: ' + difficulty);
       difficultys.push(difficulty)
-      cb(null, field);
+      cb(null, difficulty);
     }   );
-  }
+}
 
-function publisherCreate(name, cb) {
-    var publisher = new Publisher({ name: name });
+function publisherCreate(publisher, cb) {
+    var publisher = new Publisher({ publisher: publisher });
          
-    field.save(function (err) {
+    publisher.save(function (err) {
       if (err) {
         cb(err, null);
         return;
       }
       console.log('New Publisher: ' + publisher);
       publishers.push(publisher)
-      cb(null, field);
+      cb(null, publisher);
     }   );
   }
 
-function bookCreate(title, author, summary, field, publisher, cb) {
+function bookCreate(title, author, summary, field, difficulty, publisher, cb) {
   bookdetail = { 
     title: title,
     author: author,
-    summary: summary
+    field: field,
+    difficulty: difficulty
   }
   
-  if (field != false) bookdetail.field = field
-  if (publisher != false) bookdetail.publisher = publisher
+  if (summary != null) bookdetail.field = field
+  if (publisher != null) bookdetail.publisher = publisher
     
   var book = new Book(bookdetail);    
   book.save(function (err) {
@@ -110,7 +112,7 @@ function bookCreate(title, author, summary, field, publisher, cb) {
   }  );
 }
 
-function createGenreAuthors(cb) {
+function createAuthors(cb) {
     async.series([
         function(callback) {
           authorCreate('Michael', 'Spivak', callback);
@@ -132,16 +134,12 @@ function createGenreAuthors(cb) {
         },
         function(callback) {
           authorCreate('Donald', 'Knuth', callback);
-        },
-        function(callback) {
-          publisherCreate("Dover", callback);
-        }
-        ],
+        }],
     cb);
 }
 
 function createFields(cb) {
-    async.parallel([
+    async.series([
         function(callback) {
             fieldCreate("Topology", callback);
           },
@@ -152,7 +150,7 @@ function createFields(cb) {
             fieldCreate("Algebra", callback);
           },
           function(callback) {
-            fieldCreate("Discrete Mathematics", callback);
+            fieldCreate("Graph Theory", callback);
           },
           function(callback) {
             fieldCreate("Calculus", callback);
@@ -172,35 +170,70 @@ function createFields(cb) {
     ], cb)
 }
 
+function createDifficulties(cb) {
+  async.series([
+    function(callback) {
+      difficultyCreate("Elementary", callback);
+    },
+    function(callback) {
+      difficultyCreate("Intermediate", callback);
+    },
+    function(callback) {
+      difficultyCreate("Advanced", callback);
+    }
+  ], cb)
+}
+
+function createPublishers(cb) {
+  async.series([
+    function(callback) {
+      publisherCreate("Dover", callback);
+    },
+    function(callback) {
+      publisherCreate("Springer", callback);
+    } 
+  ], cb)
+}
+
 
 function createBooks(cb) {
     async.parallel([
         function(callback) {
-          bookCreate('Calculus', '', authors[0], [genres[0],], callback);
+          bookCreate('Calculus',  authors[0], null, fields[4], difficultys[1], null, callback);
         },
         function(callback) {
-          bookCreate("The Art of Computer Programming: Volume 1", '', authors[0], [genres[0],], callback);
+          bookCreate("The Art of Computer Programming: Volume 1", authors[6], null, fields[6], difficultys[1], null, callback);
         },
         function(callback) {
-          bookCreate("Algebra", '', authors[0], [genres[0],], callback);
+          bookCreate("A Book of Abstract Algebra",  authors[3], null, fields[2], difficultys[1], publishers[0], callback);
         },
         function(callback) {
-            bookCreate("Trigonometry", '', authors[0], [genres[0],], callback);
+            bookCreate("Trigonometry",  authors[5], null, fields[7], difficultys[0], null, callback);
         },
         function(callback) {
-          bookCreate("Linear Algebra Done Right", "", authors[1], [genres[1],], callback);
+          bookCreate("Algebra",  authors[5], null, fields[7], difficultys[0], null, callback);
         },
         function(callback) {
-          bookCreate("","", '9780765379504', authors[1], [genres[1],], callback);
+          bookCreate("Linear Algebra Done Right", authors[4], null, fields[5], difficultys[1], publishers[1], callback);
+        },
+        function(callback) {
+          bookCreate("Topology; a first course", authors[2], null, fields[0], difficultys[2], null, callback);
+        },
+        function(callback) {
+          bookCreate("Understanding Analysis", authors[1], null, fields[1], difficultys[2], publishers[1], callback);
+        },
+        function(callback) {
+          bookCreate("Introduction to Graph Theory", authors[1], null, fields[3], difficultys[1], publishers[0], callback);
         }
         ],
-        // optional callback
         cb);
 }
 
 async.series([
-    createGenreAuthors,
+    createAuthors,
     createFields,
+    createPublishers,
+    createDifficulties,
     createBooks
 ],
 // Optional callback
