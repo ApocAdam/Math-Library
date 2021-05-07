@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>
+            <%= data.title %>
+        </h1>
+        Info:
+        <ul>
+            <li>
+                Author:  
+                <% for (let j=0; j < data.author.length; j++) { %>
+                    <%= data.author[j].first_name %>
+                    <%= data.author[j].last_name %>
+                <% } %>
+            </li>
+            <li>
+                Field: <%= data.field.field %>
+            </li>
+            <li>
+                Difficulty: <%= data.difficulty.difficulty %>
+            </li>
+            <li>
+                <% if (data.publisher) { %>
+                    Publisher: <%= data.publisher.publisher %>
+                <% } %>
+            </li>
+
+        </ul> 
+
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>
+            Books
+        </h1>
+        <% for (let i=0; i < data.length; i++) {%>
+            <a href="<%= data[i].url %>"><%= data[i].title %></a>,
+             
+            <% for (let j=0; j < data[i].author.length; j++) { %>
+                <%= data[i].author[j].first_name %>
+                <%= data[i].author[j].last_name %>
+            <% } %>
+            <br></br>
+        <% } %>          
+    </body>
+</html>
