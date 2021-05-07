@@ -13,9 +13,15 @@ exports.index = function(req, res) {
 };
 
 exports.book_list = function(req, res) {
-    res.send("book list");
+    Book.find({}, "title author").populate("author").exec(function(err, list_books) {
+        if (err) {return next(err); }
+        res.render("bookList", {title: "Books", error: err, data: list_books});
+    })
 }
 
 exports.book_detail = function(req, res) {
-    res.send("book detail" + req.params.id);
+    Book.findById(req.params.id).populate("author field difficulty publisher").exec(function(err, book) {
+        if (err) {return next(err); }
+        res.render("bookDetail", {data: book});
+    })
 }
