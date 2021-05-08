@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= author %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>
+            <%= author.first_name %> <%= author.last_name %>
+        </h1>
+        <% for (let i=0; i < author_books.length; i++) {%>
+            <a href="<%= author_books[i].url %>"><%= author_books[i].title %></a>
+            <br></br>
+        <% } %>          
+    </body>
+</html>

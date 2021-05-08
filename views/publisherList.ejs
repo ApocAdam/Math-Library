@@ -6,10 +6,10 @@
     </head>
     <body>
         <h1>
-            Fields
+            Publisher
         </h1>
         <% for (let i=0; i < data.length; i++) {%>
-            <a href=""><%= data[i].publisher %></a>
+            <a href="<%= data[i].url %>"><%= data[i].publisher %></a>
             <br></br>
         <% } %>          
     </body>

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%= title %></title>
+        <title><%= field %></title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
         <h1>
-            Fields
+            <%= field %>
         </h1>
-        <% for (let i=0; i < data.length; i++) {%>
-            <a href="<%= data[i].url %>"><%= data[i].field %></a>
+        <% for (let i=0; i < field_books.length; i++) {%>
+            <a href="<%= field_books[i].url %>"><%= field_books[i].title %></a>
             <br></br>
         <% } %>          
     </body>

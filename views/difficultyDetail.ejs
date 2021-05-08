@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= difficulty %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>
+            <%= difficulty %>
+        </h1>
+        <% for (let i=0; i < difficulty_books.length; i++) {%>
+            <a href="<%= difficulty_books[i].url %>"><%= difficulty_books[i].title %></a>
+            <br></br>
+        <% } %>          
+    </body>
+</html>

@@ -6,7 +6,7 @@ const DifficultySchema = new Schema({
 });
 
 DifficultySchema.virtual("url").get(function () {
-    return "catalog/difficulty/" + this._id;
+    return "/catalog/difficulty/" + this._id;
 })
 
 module.exports = mongoose.model("Difficulty", DifficultySchema);

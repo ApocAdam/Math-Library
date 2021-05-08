@@ -6,7 +6,7 @@ const FieldSchema = new Schema({
 });
 
 FieldSchema.virtual("url").get(function () {
-    return "catalog/field/" + this._id;
+    return "/catalog/field/" + this._id;
 })
 
 module.exports = mongoose.model("Field", FieldSchema);
