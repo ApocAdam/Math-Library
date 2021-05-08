@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>
+            Fields
+        </h1>
+        <% for (let i=0; i < data.length; i++) {%>
+            <a href=""><%= data[i].first_name %></a>
+            <a href=""><%= data[i].last_name %></a>
+            <br></br>
+        <% } %>          
+    </body>
+</html>

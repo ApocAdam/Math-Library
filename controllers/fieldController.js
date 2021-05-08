@@ -1,7 +1,11 @@
-const field = require("../models/field")
+const Field = require("../models/field")
 
 exports.field_list = function(req, res) {
-    res.send("field list");
+
+    Field.find().sort([["field", "ascending"]]).exec(function(err, list_fields) {
+        if (err) return next(err);
+        res.render("fieldList", {title: "Fields", error: err, data: list_fields})
+    })
 }
 
 exports.field_detail = function(req, res) {

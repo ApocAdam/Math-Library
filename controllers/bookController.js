@@ -13,7 +13,7 @@ exports.index = function(req, res) {
 };
 
 exports.book_list = function(req, res) {
-    Book.find({}, "title author").populate("author").exec(function(err, list_books) {
+    Book.find({}, "title author").populate("author").sort([["title", "ascending"]]).exec(function(err, list_books) {
         if (err) {return next(err); }
         res.render("bookList", {title: "Books", error: err, data: list_books});
     })
