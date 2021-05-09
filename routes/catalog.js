@@ -25,6 +25,10 @@ router.get("/authors", author_controller.author_list);
 
 // Field Routes
 
+router.get("/field/create", field_controller.field_create_get)
+
+router.post("/field/create", field_controller.field_create_post)
+
 router.get("/field/:id", field_controller.field_detail);
 
 router.get("/fields", field_controller.field_list);
@@ -36,6 +40,10 @@ router.get("/difficulty/:id", difficulty_controller.difficulty_detail);
 router.get("/difficultys", difficulty_controller.difficulty_list);
 
 // Publisher Routes
+
+router.get("/publisher/create", publisher_controller.publisher_create_get)
+
+router.post("/publisher/create", publisher_controller.publisher_create_post)
 
 router.get("/publisher/:id", publisher_controller.publisher_detail);
 
