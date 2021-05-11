@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <form method="POST" action="">
+            <label>Title:</label>
+            <br></br>
+            <input type="text" name="title">
+            <br></br>
+            <label for="author">Author:</label>
+            <br></br>
+            <select name="author">
+            <% for (let i = 0; i < authors.length; i++) { %>
+                <option value="<%= authors[i]._id %>"><%= authors[i].first_name + " " + authors[i].last_name %></option>
+            <% } %>
+            </select>
+            <br></br>
+            <label for="field">Field:</label>
+            <br></br>
+            <select name="field">
+            <% for (let i = 0; i < fields.length; i++) { %>
+                <option value="<%= fields[i]._id %>"><%= fields[i].field %></option>
+            <% } %>
+            </select>
+            <br></br>
+            <label for="difficulty">Difficulty:</label>
+            <br></br>
+            <select name="difficulty">
+            <% for (let i = 0; i < difficultys.length; i++) { %>
+                <option value="<%= difficultys[i]._id %>"><%= difficultys[i].difficulty %></option>
+            <% } %>
+            </select>
+            <br></br>
+            <label for="publisher">Publisher:</label>
+            <br></br>
+            <select name="publisher">
+            <% for (let i = 0; i < publishers.length; i++) { %>
+                <option value="<%= publishers[i]._id %>"><%= publishers[i].publisher %></option>
+            <% } %>
+            </select>
+            <br></br>
+            <input value="Submit" type="submit">
+        </form>
+        <% if (locals.errors) { %>
+            <% for (let i = 0; i < errors.length; i++) { %>
+                <p><%= errors[i].msg %><p>
+            <% } %>
+        <% } %>
+    </body>
+    <%- include("home"); -%>
+</html>
